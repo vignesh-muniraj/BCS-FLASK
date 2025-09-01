@@ -115,20 +115,19 @@ def get_all_movies():
 
 @movies_bp.get("/<id>")
 def get_movie_by_id(id):
-    # List (Dict) -> JSON
-    print(id, type(id))
-
-    for movie in movies:
-        if movie["id"] == id:
-            return movie
-
-    return {"message": "Movie not found"}, HTTP_NOT_FOUND
-
-
+    data = Movie.query.get(id)
+    # print(f"1st:{data}")
+    if not data:
+        return {"message": "Movie not found"}, HTTP_NOT_FOUND
+    movie = data.to_dict()
+    # print(movie)
+    return movie
 
 
 @movies_bp.delete("/<id>")
 def delete_movie_by_id(id):
+    data = Movie.query.get(id)
+    movie = data.to_dict()
     for movie in movies:
         if movie["id"] == id:
             movies.remove(movie)
