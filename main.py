@@ -26,5 +26,7 @@ def hello_world():
 
 
 from routes.movies_bp import movies_bp
+from routes.users_bp import users_bp
 
 app.register_blueprint(movies_bp, url_prefix="/api/movies")
+app.register_blueprint(users_bp)
