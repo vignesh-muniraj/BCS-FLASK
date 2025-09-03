@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from models.movie import Movie
 from extensions import db
+
 movies = [
     {
         "name": "Thor: Ragnarok",
@@ -105,7 +106,7 @@ movies_bp = Blueprint("movies_bp", __name__)
 #     return movies
 
 
-@movies_bp.get("/")
+@movies_bp.get("")
 def get_all_movies():
     # List (Dict) -> JSON
     # Select * from movies

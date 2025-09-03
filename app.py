@@ -1,15 +1,16 @@
 from config import Config
 from flask import Flask
-
-from extensions import db
+from flask_cors import CORS
+from extensions import db,jwt
 from sqlalchemy.sql import text
-
+from os import environ
 
 app = Flask(__name__)
 app.config.from_object(Config)  # URL
+CORS(app)
 
 db.init_app(app)  # Call
-
+jwt.init_app(app)
 
 with app.app_context():
     try:
@@ -29,4 +30,8 @@ from routes.movies_bp import movies_bp
 from routes.users_bp import users_bp
 
 app.register_blueprint(movies_bp, url_prefix="/api/movies")
-app.register_blueprint(users_bp)
+app.register_blueprint(users_bp,url_prefix="/api/users")
+
+if __name__ == "__main__":
+    port = environ.get("PORT", 5000)
+    app.run(host="0.0.0.0", port=port, debug=True)
